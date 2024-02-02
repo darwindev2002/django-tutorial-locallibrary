@@ -48,6 +48,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    # WhiteNoise - serving static assets directly from Gunicorn
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     # Manages sessions across requests.
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -82,12 +84,30 @@ WSGI_APPLICATION = "locallibrary.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
+# Update database configuration from $PGHOST environment variable (if defined)
+import dj_database_url
+
+if 'PGHOST' in os.environ:
+    # Use PostgreSQL server
+    pg_user = os.environ.get('PGUSER', '')
+    pg_password = os.environ.get('PGPASSWORD', '')
+    pg_host = os.environ.get('PGHOST', '')
+    pg_port = os.environ.get('PGPORT', '')
+    pg_name = os.environ.get('PGDATABASE', '')
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=f'postgres://{pg_user}:{pg_password}@{pg_host}:{pg_port}/{pg_name}',
+            conn_max_age=500,
+            conn_health_checks=True,
+        )
     }
-}
 
 
 # Password validation
@@ -119,6 +139,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / 'static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -130,3 +151,13 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_REDIRECT_URL = '/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+# Static file serving.
+# https://whitenoise.readthedocs.io/en/stable/django.html#add-compression-and-caching-support
+STORAGES = {
+
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
