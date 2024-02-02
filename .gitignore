@@ -1,0 +1,11 @@
+*.log
+*.pot
+*.pyc
+*.pyo
+*.db
+*.sqlite3
+*.sqlite-journal
+__pycache__/
+*.egg-info/
+*.egg
+media/
