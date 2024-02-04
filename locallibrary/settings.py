@@ -31,6 +31,7 @@ DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = ['20.172.35.176', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = ['20.172.35.176']
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 
@@ -109,13 +110,14 @@ if 'PGHOST' in os.environ:
         )
     }
 else:
-    # Use SQLite @ BASE_DIR/db.sqlite3
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
+    raise Exception('Failed to connect to database.')
+#     # Use SQLite @ BASE_DIR/db.sqlite3
+#     DATABASES = {
+#         "default": {
+#             "ENGINE": "django.db.backends.sqlite3",
+#             "NAME": BASE_DIR / "db.sqlite3",
+#         }
+#     }
 
 
 # Password validation
