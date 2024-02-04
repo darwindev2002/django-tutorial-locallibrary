@@ -193,3 +193,8 @@ http {
 #}
 ~~~
 
+## References
+- Django Road (Youtube) - [Django | Server Setup (WSGI, Gunicorn, Nginx)](https://www.youtube.com/watch?v=YnrgBeIRtvo&ab_channel=Djangoroad)
+- Gunicorn - [Sample Nginx configuration](https://docs.gunicorn.org/en/stable/deploy.html)
+- Digital Ocean - [How To Serve Flask Applications with Gunicorn and Nginx on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-18-04)
+- CodeWithHarry - [How to host Django Application using gunicorn & nginx in Production](https://www.codewithharry.com/blogpost/django-deploy-nginx-gunicorn/)
