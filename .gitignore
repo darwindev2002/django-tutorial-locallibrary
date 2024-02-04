@@ -17,3 +17,6 @@ media/
 
 # Venv files
 django_env/
+
+# Credentials
+*.env
