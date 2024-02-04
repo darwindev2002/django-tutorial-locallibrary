@@ -7,7 +7,14 @@ From [https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployme
 ## Steps to deploy
 1. Install venv - ```sudo apt install python3-venv```
 2. Create venv directory - ```python3.6 -m venv django_env```
-3. Setup ```.env``` file with credentials
+3. Setup ```./.env``` file at root of project with credentials, for example:
+~~~env
+PGHOST=somewhere.service.database.azure.com
+PGUSER=db_username
+PGPORT=db_port
+PGDATABASE=db_bane
+PGPASSWORD=db_password
+~~~
 4. Setup systemctl service if necessary
 5. Enable service to start at boot```sudo systemctl enable django_tutorial_locallibrary```
 
